@@ -22,17 +22,32 @@ public class Main {
      * Thread.currentThread().getName());
      */
 
-    // Multi thread Lock Example 1
-    MultiThreadingLockExample1 lockExample = new MultiThreadingLockExample1();
+    /*
+     * // Multi thread Lock Example 1
+     * MultiThreadingLockExample1 lockExample = new MultiThreadingLockExample1();
+     * 
+     * MonitorThread1Runnable monitor1 = new MonitorThread1Runnable(lockExample);
+     * Thread t1 = new Thread(monitor1);
+     * 
+     * Thread t2 = new Thread(() -> lockExample.task2());
+     * Thread t3 = new Thread(() -> lockExample.task3());
+     * 
+     * t1.start();
+     * t2.start();
+     * t3.start();
+     * }
+     */
 
-    MonitorThread1Runnable monitor1 = new MonitorThread1Runnable(lockExample);
-    Thread t1 = new Thread(monitor1);
+    // Consumer-Producer Example
+    System.out.println("Going inside the main method: " + Thread.currentThread().getName());
+    SharedResource sharedResource = new SharedResource();
+    Thread producerThread = new Thread(new ProducerTask(sharedResource));
+    Thread consumerThread = new Thread(new ConsumerTask(sharedResource));
 
-    Thread t2 = new Thread(() -> lockExample.task2());
-    Thread t3 = new Thread(() -> lockExample.task3());
+    producerThread.start();
+    consumerThread.start();
 
-    t1.start();
-    t2.start();
-    t3.start();
+    System.out.println("Finish main method : " + Thread.currentThread().getName());
+
   }
 }
