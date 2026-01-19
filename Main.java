@@ -38,16 +38,53 @@ public class Main {
      * }
      */
 
-    // Consumer-Producer Example
+    /*
+     * // Consumer-Producer Example
+     * System.out.println("Going inside the main method: " +
+     * Thread.currentThread().getName());
+     * SharedResource sharedResource = new SharedResource();
+     * Thread producerThread = new Thread(new ProducerTask(sharedResource));
+     * Thread consumerThread = new Thread(new ConsumerTask(sharedResource));
+     * 
+     * producerThread.start();
+     * consumerThread.start();
+     * 
+     * System.out.println("Finish main method : " +
+     * Thread.currentThread().getName());
+     */
+
+    SharedResource1 resource1 = new SharedResource1();
+
     System.out.println("Going inside the main method: " + Thread.currentThread().getName());
-    SharedResource sharedResource = new SharedResource();
-    Thread producerThread = new Thread(new ProducerTask(sharedResource));
-    Thread consumerThread = new Thread(new ConsumerTask(sharedResource));
 
-    producerThread.start();
-    consumerThread.start();
+    Thread thread1 = new Thread(() -> {
+      System.out.println("Thread1 calling the produce method: " + Thread.currentThread().getName());
+      resource1.produce();
+    });
 
-    System.out.println("Finish main method : " + Thread.currentThread().getName());
+    Thread thread2 = new Thread(() -> {
+      try {
+        // Ensuring thread2 starts after thread1
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println("Thread2 calling the produce method: " + Thread.currentThread().getName());
+      resource1.produce();
+    });
 
+    thread1.start();
+    thread2.start();
+
+    try {
+      Thread.sleep(3000);
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+    System.out.println("Main thread suspended Thread1: " + thread1.getName());
+    thread1.suspend();
+
+    thread1.resume();
+    System.out.println(" Finish main method : " + Thread.currentThread().getName());
   }
 }
