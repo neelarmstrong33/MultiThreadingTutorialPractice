@@ -53,6 +53,91 @@ public class Main {
      * Thread.currentThread().getName());
      */
 
+    /*
+     * // Thread Suspension and Resumption Example
+     * SharedResource1 resource1 = new SharedResource1();
+     * 
+     * System.out.println("Going inside the main method: " +
+     * Thread.currentThread().getName());
+     * 
+     * Thread thread1 = new Thread(() -> {
+     * System.out.println("Thread1 calling the produce method: " +
+     * Thread.currentThread().getName());
+     * resource1.produce();
+     * });
+     * 
+     * Thread thread2 = new Thread(() -> {
+     * try {
+     * // Ensuring thread2 starts after thread1
+     * Thread.sleep(1000);
+     * } catch (InterruptedException e) {
+     * e.printStackTrace();
+     * }
+     * System.out.println("Thread2 calling the produce method: " +
+     * Thread.currentThread().getName());
+     * resource1.produce();
+     * });
+     * 
+     * thread1.start();
+     * thread2.start();
+     * 
+     * try {
+     * Thread.sleep(3000);
+     * } catch (Exception e) {
+     * // TODO: handle exception
+     * }
+     * System.out.println("Main thread suspended Thread1: " + thread1.getName());
+     * thread1.suspend();
+     * 
+     * thread1.resume();
+     * System.out.println(" Finish main method : " +
+     * Thread.currentThread().getName());
+     */
+
+    /*
+     * // Thread Joins Example
+     * SharedResource1 resource1 = new SharedResource1();
+     * 
+     * System.out.println("Going inside the main method: " +
+     * Thread.currentThread().getName());
+     * 
+     * Thread thread1 = new Thread(() -> {
+     * System.out.println("Thread1 calling the produce method: " +
+     * Thread.currentThread().getName());
+     * resource1.produce();
+     * });
+     * 
+     * thread1.start();
+     * 
+     * try {
+     * System.out.println("Main thread waiting for Thread1 to finish: " +
+     * thread1.getName());
+     * thread1.join();
+     * } catch (Exception e) {
+     * // TODO: handle exception
+     * }
+     * System.out.println("Finish main method : " +
+     * Thread.currentThread().getName());
+     */
+
+    /*
+     * // Thread Priorities Example
+     * SharedResource1 resource1 = new SharedResource1();
+     * 
+     * System.out.println("Going inside the main method: " +
+     * Thread.currentThread().getName());
+     * 
+     * Thread thread1 = new Thread(() -> {
+     * System.out.println("Thread1 calling the produce method: " +
+     * Thread.currentThread().getName());
+     * resource1.produce();
+     * });
+     * 
+     * thread1.setPriority(Thread.MAX_PRIORITY);
+     * thread1.start();
+     */
+
+    // Thread Daemon Example
     SharedResource1 resource1 = new SharedResource1();
 
     System.out.println("Going inside the main method: " + Thread.currentThread().getName());
@@ -62,29 +147,9 @@ public class Main {
       resource1.produce();
     });
 
-    Thread thread2 = new Thread(() -> {
-      try {
-        // Ensuring thread2 starts after thread1
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      System.out.println("Thread2 calling the produce method: " + Thread.currentThread().getName());
-      resource1.produce();
-    });
-
+    thread1.setDaemon(true);
     thread1.start();
-    thread2.start();
 
-    try {
-      Thread.sleep(3000);
-    } catch (Exception e) {
-      // TODO: handle exception
-    }
-    System.out.println("Main thread suspended Thread1: " + thread1.getName());
-    thread1.suspend();
-
-    thread1.resume();
-    System.out.println(" Finish main method : " + Thread.currentThread().getName());
+    System.out.println("Finish main method : " + Thread.currentThread().getName());
   }
 }
